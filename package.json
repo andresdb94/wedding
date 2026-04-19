@@ -1,0 +1,13 @@
+{
+  "name": "wedding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lista nozze statica in HTML e Tailwind",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

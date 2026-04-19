@@ -1413,6 +1413,10 @@ html {
   color: rgb(249 250 251 / var(--tw-text-opacity, 1));
 }
 
+.underline {
+  text-decoration-line: underline;
+}
+
 .underline-offset-4 {
   text-underline-offset: 4px;
 }

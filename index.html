@@ -98,7 +98,7 @@
             rgba(15, 23, 42, 0.45),
             rgba(15, 23, 42, 0.65)
           ),
-          url('./dist/img/hero.jpg');
+          url('./dist/img/hero.JPG');
       "
     >
       <div class="relative z-10 mx-auto max-w-3xl px-4 text-center text-white">
@@ -120,10 +120,19 @@
     <section id="welcome" class="bg-white py-16 sm:py-20">
       <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
         <h2 class="font-display text-3xl font-bold text-[#641e1e] sm:text-4xl">E quindi ci sposiamo...</h2>
-        <p class=" text-lg leading-relaxed text-stone-600 font-light">
+        
+        <div class="overflow-hidden rounded-2xl bg-stone-100 shadow-inner mt-6">
+          <img
+            src="./dist/img/sub_hero.JPG"
+            alt=""
+            class="w-full object-cover sm:aspect-[4/5]"
+          />
+        </div>
+        <p class=" text-lg leading-relaxed text-stone-600 font-light mt-4">
           Sì ma... niente di serio eh...
         </p>
       </div>
+      
     </section>
 
     <!-- Countdown (section-countdown-birds) -->
@@ -164,7 +173,26 @@
         <div class="text-center">
           <h2 class="font-display text-3xl font-bold text-[#641e1e] sm:text-4xl">Ma prima un veloce riassunto...</h2>
         </div>
-        <p class="mt-6 text-lg leading-relaxed text-stone-600 font-light">TBD (TODO: aggiungere riassunto)</p>
+        <div class="overflow-hidden rounded-2xl bg-stone-100 shadow-inner mt-6">
+          <img
+            src="./dist/img/history.JPG"
+            alt=""
+            class="w-full object-cover sm:aspect-[4/5]"
+          />
+        </div>
+        <p class="mt-8 text-lg leading-relaxed text-stone-600 font-light">
+          Mentre il mondo si fermava per via del covid la nostra storia iniziava. 
+          <br/>Eh si! doveva proprio arrivare il covid per farci conoscere! 
+          <br/>E così dopo centinaia di lettere scambiate su Slowly, mille minuti in chiamata e due paia di scarpe consumate girando intorno all’isolato ci siamo finalmente visti sotto coprifuoco ad un anno preciso dalla prima lettera. Ci siamo visti, subito piaciuti e mai più lasciati. 
+          <br/>E così dopo weekend passati insieme, una convivenza e una casa con due conigli... Abbiamo deciso di fare questo grande passo.
+        </p>
+        <div class="overflow-hidden rounded-2xl bg-stone-100 shadow-inner mt-6">
+          <img
+            src="./dist/img/history_2.JPG"
+            alt=""
+            class="w-full object-cover sm:aspect-[4/5]"
+          />
+        </div>
       </div>
     </section>
 
@@ -239,7 +267,7 @@
             <span
               class="absolute -left-[39px] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#641e1e] bg-white sm:-left-[43px]"
             ></span>
-            <p class="text-sm font-medium text-[#641e1e]">Ore: 17:00</p>
+            <p class="text-sm font-medium text-[#641e1e]">Ore: 18:00</p>
             <h3 class="font-display text-xl font-semibold text-stone-900">Taglio della torta</h3>
           </li>
           <li class="relative">
@@ -299,14 +327,6 @@
               />
             </label>
             <label class="block text-sm sm:col-span-2">
-              <span class="text-white/80">Email</span>
-              <input
-                type="email"
-                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-[#641e1e] focus:ring-2"
-                placeholder="mario@email.it"
-              />
-            </label>
-            <label class="block text-sm sm:col-span-2">
               <span class="text-white/80">Messaggio per gli sposi</span>
               <textarea
                 rows="3"
@@ -318,12 +338,38 @@
           <button
             type="button"
             class="w-full rounded-full bg-white py-3 text-sm font-semibold text-[#641e1e] shadow-lg transition hover:bg-white/80"
+            onclick="document.getElementById('rsvp-modal').classList.remove('hidden')"
           >
             Invia conferma
           </button>
         </form>
       </div>
     </section>
+
+    <!-- Modale custom (sostituisce alert nativo) -->
+    <div
+      id="rsvp-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center bg-stone-900/60 px-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rsvp-modal-title"
+    >
+      <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+        <h3 id="rsvp-modal-title" class="font-display text-xl font-semibold text-[#641e1e]">
+          Ciao!
+        </h3>
+        <p class="mt-3 text-sm leading-relaxed text-stone-600">
+          Al momento non è ancora possibile inviare la conferma, ma stiamo lavorando per rendere tutto più semplice. Grazie!
+        </p>
+        <button
+          type="button"
+          onclick="document.getElementById('rsvp-modal').classList.add('hidden')"
+          class="mt-6 w-full rounded-full bg-[#641e1e] py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#641e1e]/90"
+        >
+          Ok, capito
+        </button>
+      </div>
+    </div>
 
     <!-- Viaggio / desiderio in evidenza (travel-mod) -->
     <section
@@ -340,8 +386,8 @@
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">E il viaggio?</p>
         <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Beh c'è chi dice che abbiamo già prenotato...</h2>
         <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
-          Baggianate pensiamo noi... anche se qualche pensiero lo abbiamo già... (forse qualche indizio c'è...) <br/><br/>
-          Però potete comunque offrirci un contributo per il viaggio lasciando un piccolo contributo qui:
+          Baggianate pensiamo noi... anche se qualche pensiero lo abbiamo già... (e forse qualche indizio c'è...) <br/><br/>
+          Però potete comunque offrirci un contributo per il viaggio:
           <br/>
           <br/>
           <strong>IBAN: IT50V0538733101000003948382</strong>
@@ -421,6 +467,23 @@
           if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
             setOpen(false);
             toggle.focus();
+          }
+        });
+      })();
+
+      (function () {
+        var modal = document.getElementById("rsvp-modal");
+        if (!modal) return;
+
+        modal.classList.add("flex");
+
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) modal.classList.add("hidden");
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+            modal.classList.add("hidden");
           }
         });
       })();

@@ -281,7 +281,7 @@
       </div>
     </section>
 
-    <!-- RSVP (section-photograph-list) -->
+    <!-- RSVP -->
     <section
       id="rsvp"
       class="scroll-mt-24 border-t border-stone-200 bg-[#641e1e] bg-cover bg-center py-16 text-white sm:py-20"
@@ -291,85 +291,173 @@
           <h2 class="font-display text-4xl font-bold text-white">RSVP</h2>
           <p class="mt-3 text-sm text-white/85 sm:text-base">
             Ovviamente non c'è festa senza di voi, quindi confermate la vostra presenza per noi!
+            <br />Una sola persona risponde per tutto il vostro invito.
           </p>
         </div>
-        <form class="mt-10 space-y-6 rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8">
-          <fieldset>
-            <legend class="text-sm font-medium text-white/90">Parteciperai?</legend>
-            <div class="mt-3 flex flex-wrap gap-6">
-              <label class="inline-flex cursor-pointer items-center gap-2 text-sm">
-                <input type="radio" name="rsvp" value="yes" class="h-4 w-4 border-white/40 text-[#641e1e]" checked />
-                Sì, ci sarò
-              </label>
-              <label class="inline-flex cursor-pointer items-center gap-2 text-sm">
-                <input type="radio" name="rsvp" value="no" class="h-4 w-4 border-white/40 text-[#641e1e]" />
-                No, mi dispiace
-              </label>
-            </div>
-          </fieldset>
-          <div class="grid gap-4 sm:grid-cols-2">
+
+        <!-- Step 1: ricerca invito -->
+        <div
+          id="search-section"
+          class="mt-10 space-y-4 rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
+        >
+          <h3 class="font-display text-2xl font-semibold">Chi siete?</h3>
+          <p class="text-sm text-white/80">
+            Scrivete un nome (almeno 3 lettere) e scegliete il vostro invito dall'elenco.
+          </p>
+          <input
+            id="search"
+            type="text"
+            placeholder="Es. Carlo"
+            autocomplete="off"
+            maxlength="60"
+            class="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-white/60 focus:ring-2"
+          />
+          <div id="results" class="space-y-2" aria-live="polite"></div>
+        </div>
+
+        <!-- Step 2: risposta -->
+        <form
+          id="rsvp-form"
+          novalidate
+          class="mt-10 hidden space-y-10 rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
+        >
+          <div>
+            <button id="rsvp-back" type="button" class="text-xs text-white/70 underline-offset-4 hover:underline">
+              ← Non siete voi? Cercate di nuovo
+            </button>
+            <h3 id="guest-title" class="mt-3 font-display text-3xl font-semibold"></h3>
+            <p id="answered-note" class="mt-2 hidden rounded-lg bg-white/10 px-3 py-2 text-sm text-white/90">
+              Avete già risposto. Se inviate di nuovo il modulo, la nuova risposta sostituirà la precedente.
+            </p>
+            <p id="cake-note" class="mt-2 hidden rounded-lg bg-white/10 px-3 py-2 text-sm text-white/90">
+              Siete invitati al <strong>taglio della torta</strong> (ore 18:00, Villa Acquaroli). Vi chiediamo solo di
+              confermare la presenza.
+            </p>
+          </div>
+
+          <!-- Persone dell'invito -->
+          <div class="space-y-4">
+            <h3 class="font-display text-2xl font-semibold">Chi viene (e chi no)?</h3>
+            <div id="people" class="space-y-4"></div>
+          </div>
+
+          <!-- Contatti -->
+          <div class="space-y-4">
+            <h3 class="font-display text-2xl font-semibold">Come vi contattiamo?</h3>
             <label class="block text-sm">
-              <span class="text-white/80">Ospiti</span>
-              <select
-                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white outline-none ring-[#641e1e] focus:ring-2"
-              >
-                <option class="text-stone-900">Solo io</option>
-                <option class="text-stone-900">In due</option>
-                <option class="text-stone-900">Famiglia (+ bimbi)</option>
-              </select>
-            </label>
-            <label class="block text-sm sm:col-span-2">
-              <span class="text-white/80">Nome e cognome</span>
+              <span class="text-white/80">Telefono (facoltativo)</span>
               <input
-                type="text"
-                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-[#641e1e] focus:ring-2"
-                placeholder="Mario Rossi"
+                id="ref-phone"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                maxlength="30"
+                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-white/60 focus:ring-2"
               />
+              <span class="mt-1 block text-xs text-white/60">Solo per contattarvi in caso di dubbi.</span>
             </label>
-            <label class="block text-sm sm:col-span-2">
-              <span class="text-white/80">Messaggio per gli sposi</span>
-              <textarea
-                rows="3"
-                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-[#641e1e] focus:ring-2"
-                placeholder="Allergie, note sui bambini, auguri…"
-              ></textarea>
+            <label class="block text-sm">
+              <span class="text-white/80">Email (facoltativa)</span>
+              <input
+                id="ref-email"
+                type="email"
+                autocomplete="email"
+                maxlength="120"
+                class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-white/60 focus:ring-2"
+              />
+              <span class="mt-1 block text-xs text-white/60">
+                Se la inserite vi mandiamo un riepilogo della risposta.
+              </span>
             </label>
           </div>
-          <button
-            type="button"
-            class="w-full rounded-full bg-white py-3 text-sm font-semibold text-[#641e1e] shadow-lg transition hover:bg-white/80"
-            onclick="document.getElementById('rsvp-modal').classList.remove('hidden')"
-          >
-            Invia conferma
-          </button>
+
+          <!-- Note -->
+          <label class="block text-sm">
+            <span class="text-white/80">Altro da dirci? (facoltativo)</span>
+            <textarea
+              id="notes"
+              rows="3"
+              maxlength="500"
+              placeholder="Es. serve un seggiolone, difficoltà di movimento..."
+              class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-white/60 focus:ring-2"
+            ></textarea>
+          </label>
+
+          <!-- Honeypot anti-spam: gli utenti non lo vedono -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label>
+              Sito web
+              <input id="website" type="text" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <div>
+            <button
+              id="submit"
+              type="submit"
+              class="w-full rounded-full bg-white py-3 text-sm font-semibold text-[#641e1e] shadow-lg transition hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Invia risposta
+            </button>
+            <p id="message" role="alert" class="mt-3 text-center text-sm text-white/90"></p>
+          </div>
         </form>
+
+        <!-- Conferma invio -->
+        <div
+          id="rsvp-done"
+          class="mt-10 hidden space-y-4 rounded-2xl border border-white/15 bg-white/5 p-8 text-center backdrop-blur-md"
+          aria-live="polite"
+        >
+          <h3 id="done-title" class="font-display text-3xl font-semibold"></h3>
+          <p id="done-text" class="text-sm text-white/85"></p>
+          <p class="text-xs text-white/60">
+            Per modificare la risposta, cercate di nuovo il vostro invito e inviate il modulo: l'ultima risposta
+            sostituisce la precedente.
+          </p>
+          <button
+            id="rsvp-again"
+            type="button"
+            class="text-sm text-white/80 underline underline-offset-4 hover:text-white"
+          >
+            Torna alla ricerca
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- Modale custom (sostituisce alert nativo) -->
-    <div
-      id="rsvp-modal"
-      class="fixed inset-0 z-[100] hidden items-center justify-center bg-stone-900/60 px-4 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="rsvp-modal-title"
-    >
-      <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
-        <h3 id="rsvp-modal-title" class="font-display text-xl font-semibold text-[#641e1e]">
-          Ciao!
-        </h3>
-        <p class="mt-3 text-sm leading-relaxed text-stone-600">
-          Al momento non è ancora possibile inviare la conferma, ma stiamo lavorando per rendere tutto più semplice. Grazie!
-        </p>
-        <button
-          type="button"
-          onclick="document.getElementById('rsvp-modal').classList.add('hidden')"
-          class="mt-6 w-full rounded-full bg-[#641e1e] py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#641e1e]/90"
-        >
-          Ok, capito
-        </button>
-      </div>
-    </div>
+    <template id="person-tpl">
+      <fieldset class="space-y-4 rounded-xl border border-white/15 bg-white/5 p-4" data-person>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+          <legend data-f="title" class="font-display text-xl font-semibold"></legend>
+          <span data-f="band" class="text-xs uppercase tracking-wider text-white/60"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 text-sm sm:flex-row sm:gap-6">
+          <label class="inline-flex cursor-pointer items-center gap-2">
+            <input type="radio" data-f="yes" value="yes" class="h-4 w-4" />
+            Sì, ci sarà ❤️
+          </label>
+          <label class="inline-flex cursor-pointer items-center gap-2">
+            <input type="radio" data-f="no" value="no" class="h-4 w-4" />
+            Non potrà esserci
+          </label>
+        </div>
+
+        <div data-f="details" class="hidden space-y-4">
+          <label class="block text-sm">
+            <span class="text-white/80">Allergie o intolleranze (facoltativo)</span>
+            <input
+              data-f="allergies"
+              type="text"
+              maxlength="200"
+              placeholder="Es. frutta secca, lattosio, nichel..."
+              class="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder:text-white/40 outline-none ring-white/60 focus:ring-2"
+            />
+          </label>
+        </div>
+      </fieldset>
+    </template>
 
     <!-- Viaggio / desiderio in evidenza (travel-mod) -->
     <section
@@ -470,22 +558,284 @@
           }
         });
       })();
+    </script>
 
+    <script>
       (function () {
-        var modal = document.getElementById("rsvp-modal");
-        if (!modal) return;
+        // URL della Web App di Google Apps Script (vedi apps-script/README.md)
+        var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYCHtutL-Cpg4CqMKtU-1nAiok8kE6F3x7TMxO0g3yKpOEAFFiEdX_BsaOb5SbOVsOyw/exec";
 
-        modal.classList.add("flex");
+        var BAND_LABELS = {
+          Adulto: "Adulto",
+          "Bambino 3-10": "Bambino",
+          "Bambino 0-3": "Bambino",
+        };
 
-        modal.addEventListener("click", function (e) {
-          if (e.target === modal) modal.classList.add("hidden");
+        var searchSection = document.getElementById("search-section");
+        var searchInput = document.getElementById("search");
+        var results = document.getElementById("results");
+        var form = document.getElementById("rsvp-form");
+        if (!form || !searchInput) return;
+
+        var guestTitle = document.getElementById("guest-title");
+        var answeredNote = document.getElementById("answered-note");
+        var cakeNote = document.getElementById("cake-note");
+        var peopleEl = document.getElementById("people");
+        var tpl = document.getElementById("person-tpl");
+        var submitBtn = document.getElementById("submit");
+        var message = document.getElementById("message");
+        var done = document.getElementById("rsvp-done");
+        var doneTitle = document.getElementById("done-title");
+        var doneText = document.getElementById("done-text");
+
+        var selected = null;
+        var counter = 0;
+
+        function endpoint(params) {
+          var qs = Object.keys(params)
+            .map(function (k) {
+              return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+            })
+            .join("&");
+          return APPS_SCRIPT_URL + (APPS_SCRIPT_URL.indexOf("?") < 0 ? "?" : "&") + qs;
+        }
+
+        function isConfigured() {
+          return APPS_SCRIPT_URL.indexOf("https://") === 0;
+        }
+
+        function showText(text) {
+          var p = document.createElement("p");
+          p.className = "text-sm text-white/70";
+          p.textContent = text;
+          results.replaceChildren(p);
+        }
+
+        // -------------------------
+        // Ricerca invito
+        // -------------------------
+
+        var searchTimeout;
+        var searchSeq = 0;
+
+        searchInput.addEventListener("input", function () {
+          clearTimeout(searchTimeout);
+          var value = searchInput.value.trim();
+          results.replaceChildren();
+          searchSeq++;
+          if (value.replace(/\s/g, "").length < 3) return;
+          searchTimeout = setTimeout(function () {
+            searchGuests(value);
+          }, 300);
         });
 
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-            modal.classList.add("hidden");
+        function searchGuests(value) {
+          if (!isConfigured()) {
+            showText("Il modulo non è ancora configurato.");
+            return;
           }
+          var seq = ++searchSeq;
+          showText("Cerco...");
+          fetch(endpoint({ action: "search", q: value }))
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (out) {
+              // Ignora risposte arrivate dopo una ricerca più recente
+              if (seq !== searchSeq) return;
+              if (!out || !out.ok) throw new Error((out && out.error) || "Errore");
+              renderResults(out.results || []);
+            })
+            .catch(function (err) {
+              if (seq !== searchSeq) return;
+              console.error(err);
+              showText("Errore nella ricerca. Riprovate tra poco.");
+            });
+        }
+
+        function renderResults(list) {
+          if (!list.length) {
+            showText("Nessun invito trovato. Provate con un altro nome o scriveteci.");
+            return;
+          }
+          results.replaceChildren();
+          list.forEach(function (guest) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className =
+              "block w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-left text-sm transition hover:bg-white/20";
+            var names = document.createElement("span");
+            names.className = "block font-medium";
+            names.textContent = guest.id;
+            var count = document.createElement("span");
+            count.className = "block text-xs text-white/60";
+            count.textContent =
+              (guest.people.length === 1 ? "1 persona" : guest.people.length + " persone") +
+              (guest.cakeOnly ? " · solo taglio della torta" : "");
+            btn.appendChild(names);
+            btn.appendChild(count);
+            btn.addEventListener("click", function () {
+              selectGuest(guest);
+            });
+            results.appendChild(btn);
+          });
+        }
+
+        // -------------------------
+        // Form di risposta
+        // -------------------------
+
+        function f(row, name) {
+          return row.querySelector('[data-f="' + name + '"]');
+        }
+
+        function attendingOf(row) {
+          if (f(row, "yes").checked) return true;
+          if (f(row, "no").checked) return false;
+          return null;
+        }
+
+        function buildPerson(person, cakeOnly) {
+          var row = tpl.content.firstElementChild.cloneNode(true);
+          var group = "att-" + ++counter;
+          f(row, "yes").name = group;
+          f(row, "no").name = group;
+          f(row, "title").textContent = person.name;
+          f(row, "band").textContent = BAND_LABELS[person.band] || person.band;
+
+          // Solo torta: niente allergie, basta confermare la presenza
+          if (cakeOnly) {
+            return row;
+          }
+
+          [f(row, "yes"), f(row, "no")].forEach(function (r) {
+            r.addEventListener("change", function () {
+              f(row, "details").classList.toggle("hidden", attendingOf(row) !== true);
+            });
+          });
+          return row;
+        }
+
+        function selectGuest(guest) {
+          selected = guest;
+          form.reset();
+          message.textContent = "";
+          guestTitle.textContent = "Ciao " + guest.id + "! ❤️";
+          answeredNote.classList.toggle("hidden", !guest.answered);
+          cakeNote.classList.toggle("hidden", !guest.cakeOnly);
+          peopleEl.replaceChildren();
+          guest.people.forEach(function (p) {
+            peopleEl.appendChild(buildPerson(p, guest.cakeOnly));
+          });
+          searchSection.classList.add("hidden");
+          done.classList.add("hidden");
+          form.classList.remove("hidden");
+          guestTitle.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function backToSearch() {
+          selected = null;
+          form.classList.add("hidden");
+          done.classList.add("hidden");
+          searchSection.classList.remove("hidden");
+          searchInput.focus();
+        }
+
+        document.getElementById("rsvp-back").addEventListener("click", backToSearch);
+        document.getElementById("rsvp-again").addEventListener("click", function () {
+          searchInput.value = "";
+          results.replaceChildren();
+          backToSearch();
         });
+
+        function fail(el, text) {
+          message.textContent = text;
+          if (el) el.focus();
+          return null;
+        }
+
+        function collect() {
+          var phone = document.getElementById("ref-phone");
+          var email = document.getElementById("ref-email");
+          var rows = Array.prototype.slice.call(peopleEl.children);
+          var people = [];
+
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var name = selected.people[i].name;
+            var attending = attendingOf(row);
+            if (attending === null) return fail(f(row, "yes"), "Indicate se " + name + " ci sarà.");
+            var person = { attending: attending, allergies: "" };
+            if (attending && !selected.cakeOnly) person.allergies = f(row, "allergies").value.trim();
+            people.push(person);
+          }
+
+          var digits = phone.value.replace(/\D/g, "").length;
+          if (phone.value.trim() && digits < 6) return fail(phone, "Il numero di telefono non sembra valido.");
+          var mail = email.value.trim();
+          if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return fail(email, "L'email non sembra valida.");
+
+          return {
+            nucleus: selected.id,
+            phone: phone.value.trim(),
+            email: mail,
+            notes: document.getElementById("notes").value.trim(),
+            website: document.getElementById("website").value,
+            people: people,
+          };
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          message.textContent = "";
+          if (!selected) return;
+
+          var payload = collect();
+          if (!payload) return;
+
+          submitBtn.disabled = true;
+          message.textContent = "Invio in corso...";
+
+          // text/plain evita la richiesta preflight CORS, che Apps Script non gestisce
+          fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (out) {
+              if (!out || !out.ok) throw new Error((out && out.error) || "Errore");
+              showDone(payload, out);
+            })
+            .catch(function (err) {
+              console.error(err);
+              message.textContent = "Non è stato possibile inviare la risposta. Riprovate tra poco o scriveteci.";
+            })
+            .then(function () {
+              submitBtn.disabled = false;
+            });
+        });
+
+        function showDone(payload, out) {
+          var anyYes = payload.people.some(function (p) {
+            return p.attending;
+          });
+          doneTitle.textContent = anyYes ? "Grazie! ❤️" : "Grazie per avercelo fatto sapere";
+          var text = anyYes
+            ? "Abbiamo registrato la vostra risposta. Non vediamo l'ora di festeggiare con voi!"
+            : "Ci mancherete, ma grazie per averci risposto.";
+          if (payload.email) {
+            text += out.emailSent
+              ? " Vi abbiamo inviato un'email di riepilogo."
+              : " La risposta è salvata, ma non siamo riusciti a inviare l'email di riepilogo.";
+          }
+          doneText.textContent = text;
+          form.classList.add("hidden");
+          done.classList.remove("hidden");
+          done.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       })();
     </script>
   </body>
